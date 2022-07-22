@@ -1,0 +1,4 @@
+[22-May-2021 17:31:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/trascien/public_html/wp-content/themes/trasciende/404.php:3
+Stack trace:
+#0 {main}
+  thrown in /home/trascien/public_html/wp-content/themes/trasciende/404.php on line 3
