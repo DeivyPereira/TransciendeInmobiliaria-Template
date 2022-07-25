@@ -331,7 +331,6 @@ $testimony = $testimony['items'];
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -522,11 +521,7 @@ $testimony = $testimony['items'];
                                                 alt="<?php echo $v['name']; ?>"
                                                 style="min-height:200px; max-height: 200px; width:100%">
                                         </a>
-
-                                        <a href="<?php echo get_site_url() . "/inmueble?id=" . $v['id']; ?>"><i
-                                                class="fa fa-plus" aria-hidden="true"></i></a>
                                     </div>
-
                                     <div class="property-details" style="margin-top:0px; padding-top:5px;">
                                         <span style="float:left; color:black; font-weight: bold; text-transform: uppercase;
     font-size: 15px;"><?php echo $v['type']; ?></span>
@@ -697,7 +692,7 @@ $testimony = $testimony['items'];
         <div class="container">
             <div class="row ">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="testimonial-area">
+                    <div class="testimonial-area testimonial-carousel">
 					<?php $i=0; foreach ($testimony as $v):
 						if(empty($v['photo'])):
 								$v['photo'] =" http://ximg.es/260x200/ffffff/000000";
@@ -705,18 +700,26 @@ $testimony = $testimony['items'];
 							  		$v['photo'] ="http://venetronic.com/".$v['photo'];
 								endif;
 				   ?>
-                        <div class="single-testiminial">
-						
-							<img src="<?php echo $v['photo']; ?>" class="img-circle" alt="<?php echo $v['name']; ?>" width="500">
-							
-                            <h3><?php echo $v['name']; ?> </h3>
-							<i class="fa fa-quote-left" aria-hidden="true" style="display:inline-block;"></i> 
-                            <p  style="display:inline-block;"><?php echo $v['description']; ?> </p>
-							<i class="fa fa-quote-right" aria-hidden="true" style="display:inline-block;"></i> 
-							<br/>
-                           <!--- -->
+                        <div class="exito-row exito-align-items-center ">
+                            <div class="col-md-5">
+                                <div class="testimonial-banner" style="background-image: url(<?php echo $v['photo']; ?>);"></div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="testimonial-content">
+                                        <div class="star-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="rtin-content">
+                                            <span><?php echo $v['description']; ?></span>
+                                         </div>
+                                    <h3 class="item-title"><?php echo $v['name']; ?> </h3>
+                                </div>
+                            </div>
                         </div>
-						
 						 <?php $i++; endforeach; ?>
                     </div>
                 </div>

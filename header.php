@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors', 0);
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 $ppc = $_GET['id'];
-
 $args = array(
     'method' => 'GET',
 );
@@ -95,7 +98,10 @@ $destacados = $destacados['data'];
     <link rel="shortcut icon" type="image/x-icon" href="<?php bloginfo('stylesheet_directory'); ?>/images/favicon.ico">
 
     <!-- all css here -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <!-- bootstrap v3.3.6 css -->
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/css/bootstrap.min.css">
     <!-- Flat Icon CSS
@@ -153,10 +159,7 @@ $destacados = $destacados['data'];
                         <div class="logo-area">
                             <a href="<?php echo get_option('home'); ?>"> <img
                                     src="http://trasciendeinmobiliaria.com/wp-content/themes/trasciende/images/logo-trasparente-lado.png"
-                                    style="width: 200px;
-    margin-top:20px;
-    margin-left: -60px;
-    max-width: none;"></a>
+                                    class="imgLogo"></a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
@@ -222,12 +225,12 @@ $destacados = $destacados['data'];
                                 <ul>
                                     <li style="margin-left: -80px;">
                                         <li><a href="https://facebook.com/trasciendeinmobiliariaperu/" target="_blank"><i
-	                                            class="fa fa-facebook" style="color:#3b5998"></i></a></li>
+	                                            class="fa fa-facebook" ></i></a></li>
 
 	                                <li style="margin-left: -10px;"><a href="https://www.instagram.com/trasciendeinmobiliaria/" target="_blank"><i
 	                                            class="fa fa-instagram" ></i></a></li>
                                     </li>
-                                    <li style="width: 230px;"><a
+                                    <li style="width: auto;"><a
                                             href="<?php echo get_permalink(get_page_by_path('referidos')); ?>" style="background-color: #77c720;
     border-radius: 10px;
     color: white;

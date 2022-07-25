@@ -31,8 +31,6 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="overflow:auto;">
-
-
             <div class="sidebar-area" id="formcontactoMovil">
                 <div class="find-propertise-sidebar">
                     <h3 style="font-size:16px;">Agendar visita <i class="fa fa-remove" data-dismiss="modal"></i></h3>
@@ -48,9 +46,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                     </div>
                     <div class="listed-keyword">
                         <form id="contactFormM" name="contactFormM">
-                            <p style="text-align:justify; ">
-                                <strong style="font-size: 20px;"> Te gustó esta propiedad? <br /></strong>
-                                <br /> No dudes en ponerte en contacto con nosotros para darte mas información
+                            <img src=<?php echo $destacados['imagen'][0]['path']; ?> alt="" class="ImgTeGustoEstaPropiedad">
+                            <p style="text-align:center; ">
+                                <strong style="font-size: 17px; "> ¿Te gustó esta propiedad? </strong>
                             </p>
                             <ul>
 							
@@ -80,7 +78,13 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                                         </div>
                                     </div>
                                 </li>
-                              
+                                <li >
+                                <div class="single-field">
+                                    <div class="input-box">
+                                        <textarea name="messageM" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados['id']; ?>. Quisiera que me contacten para recibir mas información</textarea>
+                                    </div>
+                                </div>
+                             </li>
                                 <li>
                                     <div class="read-more">
                                         <button type="submit" class="btn btn-success" id="enviarM"
@@ -112,7 +116,6 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                                     data-title="<?php echo $destacados['name']; ?>">
                                     <div
                                         style='height: 250px; background-image: url("<?php echo $v['path']; ?>"); background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;'>
-
                                     </div>
                                 </a>
                             </li>
@@ -434,30 +437,16 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                 <!-- Google Map Form Start Here -->
             </div>
 
-            <div style="position: fixed;
-			background:white;
-    z-index: 100000;
-    width: 100%;
-    bottom: 15px;
-    height: 55px;">
-                <div style="margin-top: 10px; text-align: end;">
-
-
-                    <a href="https://api.whatsapp.com/send?phone=51991892097&text=Hola me Interesa esta propiedad: <?php echo $text; ?>"
-                        target="_blank">
-                        <button type="button" class="btn" style="width: 45%; color: #fff; font-size: 18px;
-							background-color: #77C720;
-							border-color: #77C720;">
+            <div class="pageDetailMovilAction">
+                  
+                        <button type="button" class="btn buttonWhatsapps">
                             <i class="fa fa-whatsapp"></i>
-                            Whatsapp
+                            <a href="https://api.whatsapp.com/send?phone=51991892097&text=Hola, estoy interesado en esta propiedad con referencia <?php echo $text; ?>. Quisiera que me contacten para recibir mas información"
+                        target="_blank"> Whatsapp       </a>
                         </button>
-                    </a>
-
-                    <button type="button" class="btn" data-toggle="modal" data-target="#ModalContact" style="width: 45%; color: #fff; font-size: 18px; 
-							background-color: #F58634;
-							border-color: #F58634;">Contactar
+              
+                    <button type="button" class="btn buttonContactar" data-toggle="modal" data-target="#ModalContact" >Contactar
                     </button>
-                </div>
             </div>
         </div>
     </div>
@@ -799,10 +788,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 							<p> Agradece tu interés en nuestros servicios; en breve nos pondremos en contacto contigo.</p>
                     </div>
                     <div class="listed-keyword" id="formcontacto">
-
-                        <p style="text-align:justify; ">
-                            <strong style="font-size: 20px;"> Te gustó esta propiedad? <br /></strong>
-                            <br /> No dudes en ponerte en contacto con nosotros para darte mas información
+                    <img src=<?php echo $destacados['imagen'][0]['path']; ?> alt="" class="ImgTeGustoEstaPropiedad">
+                        <p style="text-align:center; ">
+                            <strong style="font-size: 17px; "> ¿Te gustó esta propiedad? </strong>
                         </p>
 						 <form id="contactForm" name="contactForm">
                         <ul>
@@ -830,12 +818,18 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                                 </div>
                             </li>
                             <li>
+                                <div class="single-field">
+                                    <div class="input-box">
+                                        <textarea name="messageE" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados['id']; ?>. Quisiera que me contacten para recibir mas información</textarea>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
                                	<div class="g-recaptcha" data-sitekey="6LcFdsgUAAAAABSFaKRwS-lw14o4BQ-wmy2yL8l0"></div>
 								<div style="color:red;" id="reCaptchaError" ></div>
                             </li>
                             <li>
                                 <div class="read-more">
-                                   
                                         <button type="submit" class="btn btn-success" id="enviar">CONTACTAR </button>
                                   
                                 </div>
@@ -916,22 +910,28 @@ function functioForm() {
 			} else {
 				console.log('llego al submit VERSION escritorio')
 				 var URLactual = window.location.href
+                 console.log(URLactual)
 				jQuery.ajax({
-					url: 'https://trasciendeinmobiliaria.com/apiv2/mail',
+					url: 'https://trasciendeinmobiliaria.com/email/email.php',
 					type: 'POST',
 					data: {
 						 name: document.getElementById("nameE").value,
 						phone: document.getElementById("phoneE").value,
 						email: document.getElementById("emailE").value,
+						message: document.getElementById("messageE").value,
 						subject: 'Nuevo Mensaje de Agendar Visita',
-						url: URLactual
+                        url: URLactual,
+                        urlIMG: <?php echo $destacados['imagen'][0]['path']; ?>
 					},
 					success: function(msg) {
 						document.getElementById("formcontacto").style.display = "none";
 						document.getElementById("graciascontacto").style.display = "block";
 						$('#ModalContact').modal('hide');
-					}
-				})	
+					},
+                    error: function (jqXhr, textStatus, errorMessage) { // error callback 
+                        console.log('ERORR: ' + errorMessage);
+                    }
+                })	
 			}		
 		}   
 	}
@@ -962,14 +962,16 @@ $("#contactFormM").validate({
 				console.log('llego al submit VERSION MOVIL Y enviado')
 				 var URLactual = window.location.href
 				jQuery.ajax({
-					url: 'https://trasciendeinmobiliaria.com/apiv2/mail',
+					url: 'https://trasciendeinmobiliaria.com/email/email.php',
 					type: 'POST',
 					data: {
-						 name: document.getElementById("nameM").value,
+						name: document.getElementById("nameM").value,
 						phone: document.getElementById("phoneM").value,
 						email: document.getElementById("emailM").value,
+						message: document.getElementById("messageM").value,
 						subject: 'Nuevo Mensaje de Agendar Visita',
-						url: URLactual
+						url: URLactual,
+                        urlIMG: <?php echo $destacados['imagen'][0]['path']; ?>
 					},
 					success: function(msg) {
 						document.getElementById("formcontactoMovil").style.display = "none";

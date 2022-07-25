@@ -181,7 +181,7 @@
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/localization/messages_es.js"></script>
 	<?php
 
-    wp_footer();
+     //wp_footer();
     ?>
 	</body>
 
