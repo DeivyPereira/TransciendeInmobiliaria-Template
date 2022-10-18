@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors', 0);
+nocache_headers();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -133,7 +134,7 @@ $destacados = $destacados['data'];
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/css/lightslider.css">
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/inc/fancybox/jquery.fancybox.css">
     <!-- style css -->
-    <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/style.css">
+    <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/style.css?v=<?php echo time(); ?>">
     <!-- responsive css -->
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css">

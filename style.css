@@ -67,9 +67,10 @@ body {
   line-height: 24px;
   vertical-align: baseline;
   color: #333333;
+  max-width: 99%;
 }
 a{
-  color:white
+  color:black
 }
 .floatleft {
   float: left;
@@ -363,7 +364,7 @@ ul {
   position: relative;
   /* Dropdown Menu area */
 }
- > .main-header .main-menu-area ul li.active > a {
+.main-header .main-menu-area ul li.active > a {
   font-weight: 700;
   color: #77c720 !important;
   position: relative;
@@ -382,7 +383,7 @@ ul {
 }
 .main-header .main-menu-area ul li a {
   display: block;
-  padding: 41px 10px;
+  padding: 30px 10px;
   text-decoration: none;
   text-transform: uppercase;
   color: #000000;
@@ -1493,7 +1494,7 @@ footer {
   display: block;
   letter-spacing: 2px;
 }
- > .main-header-two .main-menu-area ul li.active > a {
+.main-header-two .main-menu-area ul li.active > a {
   font-weight: 700;
   color: #77c720 !important;
   position: relative;
@@ -5533,7 +5534,7 @@ background-position: -24px -53px;
 .pageDetailMovilAction{
   position: fixed;
   background: white;
-  z-index: 100000;
+  z-index: 1000;
   width: 95%;
   bottom: 25px;
   height: 55px;
@@ -5570,3 +5571,84 @@ background-position: -24px -53px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
+.borderFormPrincipal{
+  border-style: solid;
+    border-width: 1px 0px 0px 0px;
+    border-color: #CFCFCF;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.width100{
+  width: 100%;
+  height: 6.5vh;
+}
+
+.width100, select{
+  background-color: #f7f7f7;
+    background-image: linear-gradient(180deg,#fff 50%,#eee);
+    background-repeat: repeat-x;
+    border: 1px solid #aaa;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#FFFFFFFF",endColorstr="#FFEEEEEE",GradientType=0);
+    outline: 0;
+    border-left: none;
+    border-right: 1px solid #D8EDE8;
+    color: #8c91a3;
+    font-size: 15px;
+    line-height: 48px;
+}
+
+.width100:after{
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #f00;
+  position: absolute;
+  top: 40%;
+  right: 5px;
+  content: "";
+  z-index: 98;
+ }
+
+
+
+.buttonFormPrincipal{
+  width: 86%;
+    border: none;
+    background: #77c720;
+    color: white;
+    height: 6.5vh;
+}
+.opcionesFormPrincipal{
+  font-size: 25px;
+  cursor: pointer;
+  background: white;
+  color: #77c720;
+  padding: 2vh;
+  border-radius: 11px;
+  padding: 3vh 5vh;
+  background-image: linear-gradient(180deg,#fff 50%,#dad6d6);
+}
+
+.parallax-window {
+  min-height: 90vh;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.flexThree{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5vw;
+  flex-wrap: wrap;
+  padding-bottom: 2vh;
+  width: 100%;
+}
+

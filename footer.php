@@ -158,6 +158,9 @@
 	<!-- Lightslider JS
         ============================================ -->
 	<script src="<?php bloginfo('stylesheet_directory'); ?>/js/lightslider.js"></script>
+	<!-- Parallax -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.0/parallax.min.js" ></script>
+	<!-- Parallax End -->
 	<!-- jquery.counterup js -->
 	<script src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery.counterup.min.js"></script>
 	<script src="<?php bloginfo('stylesheet_directory'); ?>/js/waypoints.min.js"></script>
@@ -178,11 +181,14 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-expander/1.7.0/jquery.expander.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js'></script>
-	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/localization/messages_es.js"></script>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/localization/messages_es.js"></script>
 	<?php
 
-     //wp_footer();
+     wp_footer();
+	 
     ?>
 	</body>
-
+<script>
+$('.parallax-window').parallax({imageSrc: 'https://www.radiustheme.com/demo/wordpress/themes/homlisti/wp-content/uploads/2021/08/home-4-main-banner.jpg'});
+</script>
 	</html>

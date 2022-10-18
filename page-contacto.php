@@ -107,7 +107,7 @@ function functioForm() {
 			} else {
 				 var URLactual = window.location.href
 				jQuery.ajax({
-					url: 'https://trasciendeinmobiliaria.com/apiv2/mail',
+					url: 'https://trasciendeinmobiliaria.com/mail/mail.php',
 					type: 'POST',
 					data: {
 						 name: document.getElementById("name").value,

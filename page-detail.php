@@ -6,27 +6,24 @@
  */
 get_header(); ?>
 <?php
-$ppc = $_GET['id'];
-
-$args = array(
-    'method' => 'GET',
-);
-//Inmuebles
-//$inmueblerest = "http://localhost/puntacana-api/property/$ppc";
+$ppc = $_GET["id"];
+$args = [
+    "method" => "GET",
+]; //Inmuebles //$inmueblerest = "http://localhost/puntacana-api/property/$ppc";
 $inmueblerest = "http://venetronic.com/property/$ppc";
 $response = wp_remote_request($inmueblerest, $args);
 $destacados = json_decode(wp_remote_retrieve_body($response), true);
-$destacados = $destacados['data'];
-
-$inmueblerest = "http://venetronic.com/category?limit=3&city=".$destacados['city']."&type=".$destacados['typeval'];
+$destacados = $destacados["data"];
+$inmueblerest =
+    "http://venetronic.com/category?limit=3&city=" .
+    $destacados["city"] .
+    "&type=" .
+    $destacados["typeval"];
 $response = wp_remote_request($inmueblerest, $args);
 $random = json_decode(wp_remote_retrieve_body($response), true);
-$random = $random['items'];
-
-$text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
+$random = $random["items"];
+$text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=" . $ppc);
 ?>
-
-
 <div id="ModalContact" class="modal animated bounceIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -46,7 +43,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                     </div>
                     <div class="listed-keyword">
                         <form id="contactFormM" name="contactFormM">
-                            <img src=<?php echo $destacados['imagen'][0]['path']; ?> alt="" class="ImgTeGustoEstaPropiedad">
+                            <img src=<?php echo $destacados["imagen"][0][
+                                "path"
+                            ]; ?> alt="" class="ImgTeGustoEstaPropiedad">
                             <p style="text-align:center; ">
                                 <strong style="font-size: 17px; "> ¿Te gustó esta propiedad? </strong>
                             </p>
@@ -81,7 +80,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                                 <li >
                                 <div class="single-field">
                                     <div class="input-box">
-                                        <textarea name="messageM" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados['id']; ?>. Quisiera que me contacten para recibir mas información</textarea>
+                                        <textarea name="messageM" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados[
+                                            "id"
+                                        ]; ?>. Quisiera que me contacten para recibir mas información</textarea>
                                     </div>
                                 </div>
                              </li>
@@ -106,32 +107,50 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 <div class="property-page-area" style="padding:0px;" id="main-content">
     <div class="full-container is-mobile">
         <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4 style="color: #77c720; padding:15px 10px 0px 10px; margin:0px; text-transform: uppercase;">
+                        <?php echo $destacados["type"]; ?> </h4>
+                    <h4 style="padding:10px;"><?php echo $destacados[
+                        "name"
+                    ]; ?> </h4>
+                    <?php echo $destacados["reference"]; ?>
+                    <div class="pricemovilDiv">
+                        <span class="pricemovilSpan">Precio<br /></span>
+                        <span class="pricemovilSpan2">
+                            <?php echo $destacados["money"]; ?>
+                            <?php echo number_format(
+                                $destacados["price"],
+                                0,
+                                ".",
+                                ","
+                            ); ?></span>
+                    </div>
+</div>
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 <div class="property-slider">
                     <div class="single-portfolio-gellary">
                         <ul id="image-galleryMovil" class="gallery">
-                            <?php foreach ($destacados['imagen'] as $v): ?>
-                            <li data-thumb="<?php echo $v['path']; ?>" data-src="<?php echo $v['path']; ?>">
-                                <a href="<?php echo $v['path']; ?>" data-lightbox="image-1"
-                                    data-title="<?php echo $destacados['name']; ?>">
+                            <?php foreach ($destacados["imagen"] as $v): ?>
+                            <li data-thumb="<?php echo $v[
+                                "path"
+                            ]; ?>" data-src="<?php echo $v["path"]; ?>">
+                                <a href="<?php echo $v[
+                                    "path"
+                                ]; ?>" data-lightbox="image-1"
+                                    data-title="<?php echo $destacados[
+                                        "name"
+                                    ]; ?>">
                                     <div
-                                        style='height: 250px; background-image: url("<?php echo $v['path']; ?>"); background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;'>
+                                        style='height: 250px; background-image: url("<?php echo $v[
+                                            "path"
+                                        ]; ?>"); background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;'>
                                     </div>
                                 </a>
                             </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <h4 style="color: #77c720; padding:15px 10px 0px 10px; margin:0px; text-transform: uppercase;">
-                        <?php echo $destacados['type']?> </h4>
-                    <h4 style="padding:10px;"><?php echo $destacados['name']; ?> </h4>
-                    <?php echo $destacados['reference']; ?>
-                    <div class="pricemovilDiv">
-                        <span class="pricemovilSpan">Precio<br /></span>
-                        <span class="pricemovilSpan2">
-                            <?php echo $destacados['money']; ?>
-                            <?php echo number_format($destacados['price'], 0, '.', ','); ?></span>
-                    </div>
+                
                 </div>
                 <div class="property-details" style="margin-top:0px;">
                     <div class="single-property-details" style="margin-top:0px; padding:20px;">
@@ -141,105 +160,155 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                                 <div class="media-body">
                                     <div class="single-property-details" style="margin-top:0px;">
                                         <div class="single-informations">
-                                            <?php if($destacados['id']): ?>
+                                            <?php if ($destacados["id"]): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>ID de propiedad
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>ID de propiedad
                                                 </div>
-                                                <div class="div50">000<?php echo $destacados['id']; ?>
+                                                <div class="div50">000<?php echo $destacados[
+                                                    "id"
+                                                ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['subcategory']): ?>
+                                            <?php if (
+                                                $destacados["subcategory"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Tipo</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Tipo</div>
                                                 <div class="div50" >
-                                                    <?php echo $destacados['subcategory']; ?>
+                                                    <?php echo $destacados[
+                                                        "subcategory"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['areatotal']): ?>
+                                            <?php if (
+                                                $destacados["areatotal"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Área Total</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Área Total</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['areatotal']; ?> M2</div>
+                                                    <?php echo $destacados[
+                                                        "areatotal"
+                                                    ]; ?> M2</div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['area']): ?>
+                                            <?php if ($destacados["area"]): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Área Construida:
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Área Construida:
                                                 </div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['area']; ?> M2</div>
+                                                    <?php echo $destacados[
+                                                        "area"
+                                                    ]; ?> M2</div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['bedrooms']): ?>
+                                            <?php if (
+                                                $destacados["bedrooms"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Dormitorios</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Dormitorios</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['bedrooms']; ?>
+                                                    <?php echo $destacados[
+                                                        "bedrooms"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
 
-                                            <?php if($destacados['bathrooms']): ?>
+                                            <?php if (
+                                                $destacados["bathrooms"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Baños</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Baños</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['bathrooms']; ?>
+                                                    <?php echo $destacados[
+                                                        "bathrooms"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['garages']): ?>
+                                            <?php if (
+                                                $destacados["garages"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Cochera</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Cochera</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['garages']; ?>
+                                                    <?php echo $destacados[
+                                                        "garages"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['pisos']): ?>
+                                            <?php if ($destacados["pisos"]): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Pisos</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Pisos</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['pisos']; ?>
+                                                    <?php echo $destacados[
+                                                        "pisos"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['ascensores']): ?>
+                                            <?php if (
+                                                $destacados["ascensores"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Ascensores</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Ascensores</div>
                                                 <div class="div50">
-                                                    <?php echo $destacados['ascensores']; ?>
+                                                    <?php echo $destacados[
+                                                        "ascensores"
+                                                    ]; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['commercial']): ?>
+                                            <?php if (
+                                                $destacados["commercial"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Uso Comercial
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Uso Comercial
                                                 </div>
                                                 <div class="div50">
-                                                    <?php echo (!empty($destacados['commercial'])) ? "Si":"No"; ?>
-                                                </div>
-                                            </div>
-                                            <?php endif; ?>
-                                            <?php if($destacados['antiguedad']): ?>
-                                            <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Antigüedad:</div>
-                                                <div class="div50">
-                                                    <?php if($destacados['tag']=='Estreno'){
-															echo "Estreno";
-															}else{
-																echo $destacados['antiguedad']; 
-															}
-														?>
+                                                    <?php echo !empty(
+                                                        $destacados[
+                                                            "commercial"
+                                                        ]
+                                                    )
+                                                        ? "Si"
+                                                        : "No"; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
-                                            <?php if($destacados['mascotas']): ?>
+                                            <?php if (
+                                                $destacados["antiguedad"]
+                                            ): ?>
                                             <div>
-                                                <div class="div55"><i class="fa fa-check vinetas"></i>Mascota:</div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Antigüedad:</div>
                                                 <div class="div50">
-                                                    <?php echo (!empty($destacados['mascotas'])) ? "Si":"No";  ?>
+                                                    <?php if (
+                                                        $destacados["tag"] ==
+                                                        "Estreno"
+                                                    ) {
+                                                        echo "Estreno";
+                                                    } else {
+                                                        echo $destacados[
+                                                            "antiguedad"
+                                                        ];
+                                                    } ?>
+                                                </div>
+                                            </div>
+                                            <?php endif; ?>
+                                            <?php if (
+                                                $destacados["mascotas"]
+                                            ): ?>
+                                            <div>
+                                                <div class="div55"><i class="fa fa-check-circle vinetas"></i>Mascota:</div>
+                                                <div class="div50">
+                                                    <?php echo !empty(
+                                                        $destacados["mascotas"]
+                                                    )
+                                                        ? "Si"
+                                                        : "No"; ?>
                                                 </div>
                                             </div>
                                             <?php endif; ?>
@@ -254,73 +323,93 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                     <h4><strong>Descripción:</strong></h4>
                 </div>
                 <p style="text-align: justify; padding:0px 20px;;">
-                    <?php echo $destacados['description']; ?>
+                    <?php echo $destacados["description"]; ?>
                 </p>
                 <div class="single-property-details" style="padding:0px 15px">
                     <h4 style="display: inline-block;"><strong>Información General:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
-                        <?php if($destacados['statusinmueble']): ?>
+                        <?php if ($destacados["statusinmueble"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>ID de propiedad</div>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>ID de propiedad</div>
                             <div class="div50">000
-                                <?php echo $destacados['id']; ?>
+                                <?php echo $destacados["id"]; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['professional']): ?>
+                        <?php if ($destacados["professional"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Uso Profesional</div>
-                            <div class="div50"> <?php echo (!empty($destacados['professional'])) ? "Si":"No";  ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Uso Profesional</div>
+                            <div class="div50"> <?php echo !empty(
+                                $destacados["professional"]
+                            )
+                                ? "Si"
+                                : "No"; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['professional']): ?>
+                        <?php if ($destacados["professional"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Luminosidad</div>
-                            <div class="div50"> <?php echo (!empty($destacados['luminosidad'])) ? "Si":"No";  ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Luminosidad</div>
+                            <div class="div50"> <?php echo !empty(
+                                $destacados["luminosidad"]
+                            )
+                                ? "Si"
+                                : "No"; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['luminosidad']): ?>
+                        <?php if ($destacados["luminosidad"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Luminosidad</div>
-                            <div class="div50"><?php echo $destacados['luminosidad']; ?></div>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Luminosidad</div>
+                            <div class="div50"><?php echo $destacados[
+                                "luminosidad"
+                            ]; ?></div>
                         </div>
 
                         <?php endif; ?>
-                        <?php if($destacados['departforpisos']): ?>
+                        <?php if ($destacados["departforpisos"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Departamento por pisos</div>
-                            <div class="div50"><?php echo $destacados['departforpisos']; ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Departamento por pisos</div>
+                            <div class="div50"><?php echo $destacados[
+                                "departforpisos"
+                            ]; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['ascensores']): ?>
+                        <?php if ($destacados["ascensores"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Ascensores</div>
-                            <div class="div50"><?php echo $destacados['ascensores']; ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Ascensores</div>
+                            <div class="div50"><?php echo $destacados[
+                                "ascensores"
+                            ]; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['disposition']): ?>
+                        <?php if ($destacados["disposition"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Disposición</div>
-                            <div class="div50"><?php echo $destacados['disposition']; ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Disposición</div>
+                            <div class="div50"><?php echo $destacados[
+                                "disposition"
+                            ]; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['typegarages']): ?>
+                        <?php if ($destacados["typegarages"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Tipo Cochera</div>
-                            <div class="div50"><?php echo $destacados['typegarages']; ?>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Tipo Cochera</div>
+                            <div class="div50"><?php echo $destacados[
+                                "typegarages"
+                            ]; ?>
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($destacados['services']): ?>
+                        <?php if ($destacados["services"]): ?>
                         <div>
-                            <div class="div55"><i class="fa fa-check vinetas"></i>Puerta cochera</div>
-                            <div class="div50"><?php echo $destacados['doorgarage']; ?></div>
+                            <div class="div55"><i class="fa fa-check-circle vinetas"></i>Puerta cochera</div>
+                            <div class="div50"><?php echo $destacados[
+                                "doorgarage"
+                            ]; ?></div>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -331,15 +420,15 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
             </div>
 
             <div class="single-property-details margin-top" style="padding:0px 30px;">
-                <?php if($destacados['services']): ?>
+                <?php if ($destacados["services"]): ?>
                 <div>
                     <h4 style="display: inline-block;"><strong>Servicios:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 6px;">
-                            <?php foreach ( $destacados['services'] as $v): ?>
+                            <?php foreach ($destacados["services"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -349,15 +438,15 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                 <div class="separador"></div>
 
 
-                <?php if($destacados['ambiences']): ?>
+                <?php if ($destacados["ambiences"]): ?>
                 <div>
                     <h4 style="display: inline-block;"><strong>Ambientes:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 6px;">
-                            <?php foreach ( $destacados['ambiences'] as $v): ?>
+                            <?php foreach ($destacados["ambiences"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -367,15 +456,15 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 
                 <div class="separador"></div>
 
-                <?php if($destacados['services']): ?>
+                <?php if ($destacados["services"]): ?>
                 <div>
                     <h4 style="display: inline-block;"><strong>Adicionales:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 6px;">
-                            <?php foreach ( $destacados['additionals'] as $v): ?>
+                            <?php foreach ($destacados["additionals"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -386,15 +475,18 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                 <div class="separador"></div>
 
 
-                <?php if($destacados['common_areas']): ?>
+                <?php if ($destacados["common_areas"]): ?>
                 <div>
                     <h4 style="display: inline-block;"><strong>Áreas Comunes:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 6px;">
-                            <?php foreach ( $destacados['common_areas'] as $v): ?>
+                            <?php foreach (
+                                $destacados["common_areas"]
+                                as $v
+                            ): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -404,15 +496,18 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 
                 <div class="separador"></div>
 
-                <?php if($destacados['caracteristicas']): ?>
+                <?php if ($destacados["caracteristicas"]): ?>
                 <div>
                     <h4 style="display: inline-block;"><strong>Caracteristicas:</strong></h4>
                     <i class="pull-right flip fa fa-chevron-down" style="margin-top: 12px;"></i>
                     <div class="single-informations" style="display:none;">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 6px;">
-                            <?php foreach ( $destacados['caracteristicas'] as $v): ?>
+                            <?php foreach (
+                                $destacados["caracteristicas"]
+                                as $v
+                            ): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -428,7 +523,7 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                 <div class="single-informations">
                     <ul>
                         <li>
-                            <?php echo $destacados['reference']; ?>
+                            <?php echo $destacados["reference"]; ?>
                         </li>
                     </ul>
                 </div>
@@ -454,34 +549,88 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 </div>
 <div class="container not-is-mobile">
     <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <h3><?php echo $destacados["name"]; ?>
+                        <span style="float:right; padding:5px; border-radius:5px; color:black; text-align:right;">
+                            <span style="color: #77c720;"> <?php echo $destacados[
+                                "type"
+                            ]; ?></span><br />
+                            <?php echo $destacados["money"]; ?>
+                            <?php echo number_format(
+                                $destacados["price"],
+                                0,
+                                ".",
+                                ","
+                            ); ?>
+                        <div class="footer-social-icons" style="margin-top:0px;">
+                        <!--
+                            
+<script>
+    
+const shareData = {
+  title: <?php echo $destacados["name" ]; ?>,
+  text:  <?php echo $destacados["description" ]; ?>,
+  url: <?php echo $_SERVER["HTTP_HOST"]; ?>
+}
+
+</script>
+
+
+-->
+	                            <ul>
+	                                <li><a href="#" onclick="window.alert('Error Reportado')"><i class="fa fa-bug"></i></a></li>
+	                                <li><a href="#" onclick="window.print()"><i class="fa fa-print"></i></a></li>
+	                                <li><a href="#" onclick="navigator.share({title: '<?php echo $destacados['name']; ?>',  url: '<?php echo $_SERVER['HTTP_HOST']; ?>' })"><i class="fa fa-share-alt"></i></a></li>
+	                            </ul>
+	                        </div>    
+                        </span>
+                    </h3>
+                    <ul style=" margin-bottom:20px;">
+                    <?php if(!empty($destacados["reference"])) { ?>
+                        <li><i class="flaticon-placeholder"></i>
+                            <?php echo $destacados["reference"]; ?>
+                        </li>
+                        <?php } ?>
+                        <li> &nbsp; Area:
+                            <?php echo $destacados[
+                                "areatotal"
+                            ]; ?> M2 - Dormitorios /
+                            <?php echo $destacados[
+                                "bedrooms"
+                            ]; ?> &nbsp; - &nbsp; Baños /
+                            <?php echo $destacados["bathrooms"]; ?> &nbsp; -
+                            <?php if ($destacados["garages"]) {
+                                echo "Cocheras: " . $destacados["garages"];
+                            } ?>
+                        </li>
+                    </ul>
+    </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <div class="property-slider">
                 <div class="A">
-                    <h3><?php echo $destacados['name']; ?>
-                        <span style="float:right; padding:5px; border-radius:5px; color:black; text-align:right;">
-                            <span style="color: #77c720;"> <?php echo $destacados['type']?></span><br />
-                            <?php echo $destacados['money']; ?>
-                            <?php echo number_format($destacados['price'], 0, '.', ','); ?></span>
-                    </h3>
-                    <ul style=" margin-bottom:20px;">
-                        <li><i class="flaticon-placeholder"></i>
-                            <?php echo $destacados['reference']; ?>
-                        </li>
-                        <li> &nbsp; Area:
-                            <?php echo $destacados['areatotal']; ?> M2 - Dormitorios
-                            <?php echo $destacados['bedrooms']; ?> &nbsp; - &nbsp; Baños
-                            <?php echo $destacados['bathrooms']; ?> &nbsp; -
-                            <?php if($destacados['garages']) echo "Cocheras: " . $destacados['garages']; ?>
-                        </li>
-                    </ul>
+              
                     <div class="single-portfolio-gellary">
                         <ul id="image-gallery" class="gallery">
-                            <?php foreach ($destacados['imagen'] as $v): ?>
-                            <li data-thumb="<?php echo $v['path']; ?>" data-src="<?php echo $v['path']; ?>">
-                                <a href="<?php echo $v['path']; ?>" data-lightbox="image-1"
-                                    data-title="<?php echo $destacados['name']; ?>">
+
+                            <?php if(!empty($destacados['video'])): ?>
+                                <li  data-thumb="https://invisionstudio.com/wp-content/uploads/2016/03/The-Boutique-Real-Estate-Group-Play-Button.jpg" data-src="<?php echo $destacados["imagen"][0]['path']; ?>">
+                                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/<?php echo $destacados['video']; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </li>
+                            <?php endif; ?>
+                            <?php foreach ($destacados["imagen"] as $v): ?>
+                            <li data-thumb="<?php echo $v[
+                                "path"
+                            ]; ?>" data-src="<?php echo $v["path"]; ?>">
+                                <a href="<?php echo $v[
+                                    "path"
+                                ]; ?>" data-lightbox="image-1"
+                                    data-title="<?php echo $destacados[
+                                        "name"
+                                    ]; ?>">
                                     <div
-                                        style='height: 500px; background-image: url("<?php echo $v['path']; ?>"); background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;'>
+                                        style='height: 500px; background-image: url("<?php echo $v[
+                                            "path"
+                                        ]; ?>"); background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;'>
 
                                     </div>
                                 </a>
@@ -497,76 +646,138 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 
                             <div class="agent-area" style="margin-top:10px;">
                                 <div class="media">
-								
-                                    <a class="pull-left " href="#" style="width: 200px; margin-left: 20px; margin-bottom:15px; ">
-                                    <img  src="<?php echo $destacados['imagen'][0]['path'] ?>">
-									
-                                    </a>
                                     <div class="media-body" style="padding-top: 20px;">   
   
                                         <div class="single-property-details" style="margin-top:0px;">
                                             <div class="single-informations">
-                                                <ul style="display: flex;  flex-wrap: wrap;   ">
-                                                    <?php if($destacados['id']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>ID de
-                                                        propiedad: 000<?php echo $destacados['id']; ?> </li>
+                                                <ul style="display: flex;  flex-wrap: wrap;">
+                                                    <?php if (
+                                                        $destacados["id"]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>ID de
+                                                        propiedad: 000<?php echo $destacados[
+                                                            "id"
+                                                        ]; ?> </li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['subcategory']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Tipo:
-                                                        <?php echo $destacados['subcategory'];  ?></li>
+                                                    <?php if (
+                                                        $destacados[
+                                                            "subcategory"
+                                                        ]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Tipo:
+                                                        <?php echo $destacados[
+                                                            "subcategory"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['areatotal']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Área
+                                                    <?php if (
+                                                        $destacados["areatotal"]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Área
                                                         Total:
-                                                        <?php echo $destacados['areatotal']; ?> M2</li>
+                                                        <?php echo $destacados[
+                                                            "areatotal"
+                                                        ]; ?> M2</li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['area']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Área
-                                                        Construida: <?php echo $destacados['area']; ?> M2</li>
+                                                    <?php if (
+                                                        $destacados["area"]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Área
+                                                        Construida: <?php echo $destacados[
+                                                            "area"
+                                                        ]; ?> M2</li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['bedrooms']): ?>
+                                                    <?php if (
+                                                        $destacados["bedrooms"]
+                                                    ): ?>
                                                     <li style="width: 205px;"><i
-                                                            class="fa fa-check vinetas"></i>Dormitorios:
-                                                        <?php echo $destacados['bedrooms']; ?></li>
+                                                            class="fa fa-check-circle vinetas"></i>Dormitorios:
+                                                        <?php echo $destacados[
+                                                            "bedrooms"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['bathrooms']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Baños:
-                                                        <?php echo $destacados['bathrooms'];  ?></li>
+                                                    <?php if (
+                                                        $destacados["bathrooms"]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Baños:
+                                                        <?php echo $destacados[
+                                                            "bathrooms"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['garages']): ?>
+                                                    <?php if (
+                                                        $destacados["garages"]
+                                                    ): ?>
                                                     <li style="width: 205px;"><i
-                                                            class="fa fa-check vinetas"></i>Cochera:
-                                                        <?php echo $destacados['garages'];  ?></li>
+                                                            class="fa fa-check-circle vinetas"></i>Cochera:
+                                                        <?php echo $destacados[
+                                                            "garages"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['pisos']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Pisos:
-                                                        <?php echo $destacados['pisos'];  ?></li>
+                                                    <?php if (
+                                                        $destacados["pisos"]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Pisos:
+                                                        <?php echo $destacados[
+                                                            "pisos"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['ascensores']): ?>
+                                                    <?php if (
+                                                        $destacados[
+                                                            "ascensores"
+                                                        ]
+                                                    ): ?>
                                                     <li style="width: 205px;"><i
-                                                            class="fa fa-check vinetas"></i>Ascensores:
-                                                        <?php echo $destacados['ascensores']; ?></li>
+                                                            class="fa fa-check-circle vinetas"></i>Ascensores:
+                                                        <?php echo $destacados[
+                                                            "ascensores"
+                                                        ]; ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['commercial']): ?>
-                                                    <li style="width: 205px;"><i class="fa fa-check vinetas"></i>Uso
+                                                    <?php if (
+                                                        $destacados[
+                                                            "commercial"
+                                                        ]
+                                                    ): ?>
+                                                    <li style="width: 205px;"><i class="fa fa-check-circle vinetas"></i>Uso
                                                         Comercial:
-                                                        <?php echo (!empty($destacados['commercial'])) ? "Si":"No"; ?>
+                                                        <?php echo !empty(
+                                                            $destacados[
+                                                                "commercial"
+                                                            ]
+                                                        )
+                                                            ? "Si"
+                                                            : "No"; ?>
                                                     </li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['antiguedad']): ?>
+                                                    <?php if (
+                                                        $destacados[
+                                                            "antiguedad"
+                                                        ]
+                                                    ): ?>
                                                     <li style="width: 205px;"><i
-                                                            class="fa fa-check vinetas"></i>Antigüedad:
-                                                         <?php if($destacados['tag']=='Estreno'){
-															echo "Estreno";
-															}else{
-																echo $destacados['antiguedad']; 
-															}
-														?></li>
+                                                            class="fa fa-check-circle vinetas"></i>Antigüedad:
+                                                         <?php if (
+                                                             $destacados[
+                                                                 "tag"
+                                                             ] == "Estreno"
+                                                         ) {
+                                                             echo "Estreno";
+                                                         } else {
+                                                             echo $destacados[
+                                                                 "antiguedad"
+                                                             ];
+                                                         } ?></li>
                                                     <?php endif; ?>
-                                                    <?php if($destacados['mascotas']): ?>
+                                                    <?php if (
+                                                        $destacados["mascotas"]
+                                                    ): ?>
                                                     <li style="width: 205px;"><i
-                                                            class="fa fa-check vinetas"></i>Mascota:
-                                                        <?php echo (!empty($destacados['mascotas'])) ? "Si":"No";  ?>
+                                                            class="fa fa-check-circle vinetas"></i>Mascota:
+                                                        <?php echo !empty(
+                                                            $destacados[
+                                                                "mascotas"
+                                                            ]
+                                                        )
+                                                            ? "Si"
+                                                            : "No"; ?>
                                                     </li>
                                                     <?php endif; ?>
                                                 </ul>
@@ -582,112 +793,120 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                     <h4>Descripción:</h4>
                 </div>
                 <p style="text-align: justify;">
-                    <?php echo $destacados['description']; ?>
+                    <?php echo $destacados["description"]; ?>
                 </p>
                 <div class="single-property-details">
                     <h4>Información General:</h4>
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php if($destacados['statusinmueble']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Estado del inmueble:
-                                <?php echo $destacados['statusinmueble']; ?>
+                            <?php if ($destacados["statusinmueble"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Estado del inmueble:
+                                <?php echo $destacados["statusinmueble"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['professional']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Uso Profesional:
-                                <?php echo (!empty($destacados['professional'])) ? "Si":"No";  ?>
+                            <?php if ($destacados["professional"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Uso Profesional:
+                                <?php echo !empty($destacados["professional"])
+                                    ? "Si"
+                                    : "No"; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['luminosidad']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Luminosidad:
-                                <?php echo $destacados['luminosidad']; ?>
+                            <?php if ($destacados["luminosidad"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Luminosidad:
+                                <?php echo $destacados["luminosidad"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['departforpisos']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Departamento por pisos:
-                                <?php echo $destacados['departforpisos']; ?>
+                            <?php if ($destacados["departforpisos"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Departamento por pisos:
+                                <?php echo $destacados["departforpisos"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['ascensores']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Ascensores:
-                                <?php echo $destacados['ascensores']; ?>
+                            <?php if ($destacados["ascensores"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Ascensores:
+                                <?php echo $destacados["ascensores"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['disposition']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Disposición:
-                                <?php echo $destacados['disposition']; ?>
+                            <?php if ($destacados["disposition"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Disposición:
+                                <?php echo $destacados["disposition"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['typegarages']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Tipo Cochera:
-                                <?php echo $destacados['typegarages']; ?>
+                            <?php if ($destacados["typegarages"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Tipo Cochera:
+                                <?php echo $destacados["typegarages"]; ?>
                             </li>
                             <?php endif; ?>
-                            <?php if($destacados['services']): ?>
-                            <li style="width: 250px;"><i class="fa fa-check vinetas"></i>Puerta cochera:
-                                <?php echo $destacados['doorgarage']; ?>
+                            <?php if ($destacados["services"]): ?>
+                            <li style="width: 250px;"><i class="fa fa-check-circle vinetas"></i>Puerta cochera:
+                                <?php echo $destacados["doorgarage"]; ?>
                             </li>
                             <?php endif; ?>
                         </ul>
                     </div>
                 </div>
                 <div class="single-property-details margin-top">
-                    <?php if($destacados['services']): ?>
+                    <?php if ($destacados["services"]): ?>
                     <h4>Servicios:</h4>
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php foreach ( $destacados['services'] as $v): ?>
+                            <?php foreach ($destacados["services"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i> <?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i> <?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <?php endif; ?>
-                    <?php if($destacados['ambiences']): ?>
+                    <?php if ($destacados["ambiences"]): ?>
                     <h4>Ambientes:</h4>
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php foreach ( $destacados['ambiences'] as $v): ?>
+                            <?php foreach ($destacados["ambiences"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"> </i><?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"> </i><?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <?php endif; ?>
-                    <?php if($destacados['services']): ?>
+                    <?php if ($destacados["services"]): ?>
                     <h4>Adicionales:</h4>
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php foreach ( $destacados['additionals'] as $v): ?>
+                            <?php foreach ($destacados["additionals"] as $v): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"> </i><?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"> </i><?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <?php endif; ?>
-                    <?php if($destacados['common_areas']): ?>
+                    <?php if ($destacados["common_areas"]): ?>
                     <h4>Áreas Comunes:</h4>
 
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php foreach ( $destacados['common_areas'] as $v): ?>
+                            <?php foreach (
+                                $destacados["common_areas"]
+                                as $v
+                            ): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i><?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i><?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <?php endif; ?>
-                    <?php if($destacados['caracteristicas']): ?>
+                    <?php if ($destacados["caracteristicas"]): ?>
                     <h4>Caracteristicas:</h4>
                     <div class="single-informations">
                         <ul style="display: flex;  flex-wrap: wrap;     margin-left: 18px;">
-                            <?php foreach ( $destacados['caracteristicas'] as $v): ?>
+                            <?php foreach (
+                                $destacados["caracteristicas"]
+                                as $v
+                            ): ?>
                             <li style="width: 250px;">
-                                <i class="fa fa-check vinetas"></i><?php echo $v ?>
+                                <i class="fa fa-check-circle vinetas"></i><?php echo $v; ?>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -698,7 +917,7 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                         <div class="single-informations">
                             <ul>
                                 <li>
-                                    <?php echo $destacados['reference']; ?>
+                                    <?php echo $destacados["reference"]; ?>
                                 </li>
                             </ul>
                         </div>
@@ -717,50 +936,86 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 padding-top">
                         <div class="ribbon" style="left: 20px;
     top: 36px;">
-                                        <span style="font-size:10px;"> <?php echo $v['tag']?></span>
+                                        <span style="font-size:10px;"> <?php echo $v[
+                                            "tag"
+                                        ]; ?></span>
                                     </div>
                             <div class="single-listing">
                                 
                            
                                 <div class="listing-image">
-                                    <a href="<?php echo get_site_url() . "/inmueble?id=" . $v['id']; ?>"
+                                    <a href="<?php echo get_site_url() .
+                                        "/inmueble?id=" .
+                                        $v["id"]; ?>"
                                         style="background:none;padding: 0px;">
-                                        <img src="<?php echo $v['imagen']['img']; ?>" alt="<?php echo $v['name']; ?>"
+                                        <img src="<?php echo $v["imagen"][
+                                            "img"
+                                        ]; ?>" alt="<?php echo $v["name"]; ?>"
                                             style="min-height:180px; max-height: 180px; width:260px">
                                     </a>
-                                    <a href="<?php echo get_site_url() . "/inmueble?id=" . $v['id']; ?>"><i
+                                    <a href="<?php echo get_site_url() .
+                                        "/inmueble?id=" .
+                                        $v["id"]; ?>"><i
                                             class="fa fa-plus" aria-hidden="true"></i></a>
                                 </div>
 
-                                <div class="property-details" style="margin-top:0px;">
+                                <div class="property-details" style="margin-top:0px; padding-top: 0px;">
                                     <span
-                                        style="float:left; color:black; font-weight: bold; "><?php echo $v['type']; ?></span>
+                                        style="float:left; color:black; font-weight: bold; "><?php echo $v[
+                                            "type"
+                                        ]; ?></span>
                                     <span
-                                        style="float:right; border-radius:5px; color:black; font-weight: bold; color: #77c720;"><?php echo $destacados['money']; ?>
-                                        <?php echo number_format($v['price'], 0, '.', ','); ?></span>
+                                        style="float:right; border-radius:5px; color:black; font-weight: bold; color: #77c720;"><?php echo $destacados[
+                                            "money"
+                                        ]; ?>
+                                        <?php echo number_format(
+                                            $v["price"],
+                                            0,
+                                            ".",
+                                            ","
+                                        ); ?></span>
                                     <br />
                                     <h3><a style="font-size:15px;"
-                                            href="<?php echo get_site_url() . "/inmueble?id=" . $v['id']; ?>"><?php echo $v['name']; ?></a>
+                                            href="<?php echo get_site_url() .
+                                                "/inmueble?id=" .
+                                                $v[
+                                                    "id"
+                                                ]; ?>" alt="<?php echo $v[
+    "name"
+]; ?>" >
+                                            
+                                            <?php echo strlen($v["name"]) >= 60
+                                                ? substr(
+                                                        $v["name"],
+                                                        0,
+
+                                                        60
+                                                    ) . "..."
+                                                : $v["name"]; ?>
+                                        
+                                        </a>
                                     </h3>
                                     <p>
-                                        <?php echo $v['city']; ?>
+                                        <?php echo $v["city"]; ?>
                                     </p>
                                     <ul style="display:inline-flex;     margin-left: -10px;">
                                         <li style="margin-right: 10px;">
-                                            <i class="fa fa-home" style=" color: #77c720;"></i> &nbsp;
-                                            <?php echo $v['areatotal']; ?> M2
+                                            <i class="fa fa-home" style=" color: #77c720;"></i> 
+                                            <?php echo $v[
+                                                "areatotal"
+                                            ]; ?> <small>M2</small>
                                         </li>
                                         <li style="margin-right: 10px;">
-                                            <i class="fa fa-bed" style=" color: #77c720;"></i> &nbsp;
-                                            <?php echo $v['bedrooms']; ?>
+                                            <i class="fa fa-bed" style=" color: #77c720;"></i> 
+                                            <?php echo $v["bedrooms"]; ?>
                                         </li>
                                         <li style="margin-right: 10px;">
-                                            <i class="flaticon-bath" style="color:  #77c720;"></i> &nbsp;
-                                            <?php echo $v['bathrooms']; ?>
+                                            <i class="flaticon-bath" style="color:  #77c720;"></i> 
+                                            <?php echo $v["bathrooms"]; ?>
                                         </li>
                                         <li>
-                                            <i class="fa fa-car" style="color: #77c720;"></i> &nbsp;
-                                            <?php echo $v['garages']; ?>
+                                            <i class="fa fa-car" style="color: #77c720;"></i> 
+                                            <?php echo $v["garages"]; ?>
                                         </li>
                                     </ul>
                                 </div>
@@ -788,7 +1043,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 							<p> Agradece tu interés en nuestros servicios; en breve nos pondremos en contacto contigo.</p>
                     </div>
                     <div class="listed-keyword" id="formcontacto">
-                    <img src=<?php echo $destacados['imagen'][0]['path']; ?> alt="" class="ImgTeGustoEstaPropiedad">
+                    <img src=<?php echo $destacados["imagen"][0][
+                        "path"
+                    ]; ?> alt="" class="ImgTeGustoEstaPropiedad">
                         <p style="text-align:center; ">
                             <strong style="font-size: 17px; "> ¿Te gustó esta propiedad? </strong>
                         </p>
@@ -820,7 +1077,9 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
                             <li>
                                 <div class="single-field">
                                     <div class="input-box">
-                                        <textarea name="messageE" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados['id']; ?>. Quisiera que me contacten para recibir mas información</textarea>
+                                        <textarea name="messageE" class="form-control" >Hola, estoy interesado en esta propiedad con referencia <?php echo $destacados[
+                                            "id"
+                                        ]; ?>. Quisiera que me contacten para recibir mas información</textarea>
                                     </div>
                                 </div>
                             </li>
@@ -847,8 +1106,8 @@ $text = rawurlencode("https://trasciendeinmobiliaria.com/inmueble/?id=".$ppc);
 function initMap() {
     // var uluru = {lat: 13.710655, lng: -89.214351};
     var uluru = {
-        lat: <?php echo $destacados['lat']; ?> ,
-        lng : <?php echo $destacados['lng']; ?>
+        lat: <?php echo $destacados["lat"]; ?> ,
+        lng : <?php echo $destacados["lng"]; ?>
     };
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
@@ -859,7 +1118,7 @@ function initMap() {
         center: uluru
     });
   
-	 <?php if( $destacados['typeMap']==1): ?>
+	 <?php if ($destacados["typeMap"] == 1): ?>
     var marker = new google.maps.Marker({
         position: uluru,
         map: map
@@ -879,7 +1138,7 @@ function initMap() {
 }
 </script>
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8-FZwL6RhYV9hKD-g1aVXWh1-Jas2a5Y&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHvNtbYw3JMfjFkqF7rSgDCVksva0snpA&callback=initMap">
 </script>
 <?php get_footer(); ?>
 
@@ -921,7 +1180,7 @@ function functioForm() {
 						message: document.getElementById("messageE").value,
 						subject: 'Nuevo Mensaje de Agendar Visita',
                         url: URLactual,
-                        urlIMG: <?php echo $destacados['imagen'][0]['path']; ?>
+                        urlIMG: <?php echo $destacados["imagen"][0]["path"]; ?>
 					},
 					success: function(msg) {
 						document.getElementById("formcontacto").style.display = "none";
@@ -971,7 +1230,7 @@ $("#contactFormM").validate({
 						message: document.getElementById("messageM").value,
 						subject: 'Nuevo Mensaje de Agendar Visita',
 						url: URLactual,
-                        urlIMG: <?php echo $destacados['imagen'][0]['path']; ?>
+                        urlIMG: <?php echo $destacados["imagen"][0]["path"]; ?>
 					},
 					success: function(msg) {
 						document.getElementById("formcontactoMovil").style.display = "none";
@@ -996,4 +1255,6 @@ document.getElementById('enviar').ontouchstart = functioForm;
 
 document.getElementById('enviarM').onclick = functioFormM;
 document.getElementById('enviarM').ontouchstart = functioFormM;
+
+
 </script>
